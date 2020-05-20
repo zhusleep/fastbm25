@@ -65,7 +65,7 @@ class BM25(object):
         List of document lengths.
     """
 
-    def __init__(self, corpus, cate_dict, q_id):
+    def __init__(self, corpus):
         """
         Parameters
         ----------
@@ -79,8 +79,6 @@ class BM25(object):
         self.idf = {}
         self.doc_len = {}
         self._initialize(corpus)
-        self.cate_dict = cate_dict
-        self.q_id = q_id
         self.get_score_by_reversed_index_all_documents(corpus)
 
     def _initialize(self, corpus):
@@ -207,7 +205,7 @@ class BM25(object):
         """
         document_score = {}
         for index, document in enumerate(corpus):
-            q_id = self.q_id[index]
+            q_id =  index
             doc_freqs = self.doc_freqs[index]
             for word in document:
                 if word not in doc_freqs:
@@ -215,8 +213,8 @@ class BM25(object):
                 score = (self.idf[word] * doc_freqs[word] * (PARAM_K1 + 1)
                           / (doc_freqs[word] + PARAM_K1 * (1 - PARAM_B + PARAM_B * self.doc_len[index] / self.avgdl)))
                 if word not in document_score:
-                    document_score[word] = {q_id: {'score': round(score, 2),'cate':self.cate_dict[index]}}
+                    document_score[word] = {q_id: round(score, 2)}
                 else:
-                    document_score[word].update({q_id: {'score': round(score, 2),'cate':self.cate_dict[index]}})
+                    document_score[word].update({q_id: round(score, 2)})
         self.document_score = document_score
 
