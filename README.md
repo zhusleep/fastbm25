@@ -1,35 +1,29 @@
-# bm25
-史上最快bm25倒排检索算法
+# Installation
+The easiest way to install this package is through pip, using
 
-# 目的
-从一堆文本(corpus)中找到最相似的一句话
-
-# 用法
 ```
-from .bm25 import BM25
-import jieba
-
-# create model
-bm25model = BM25(corpus) # corpus  like [['我'，'是'，'中国人']，['我’，'喜欢'，'苹果']]，每句话都分好词
-
-# 函数调用
-def find_top_score_index(sentence):
-      """
-      sentence: 待查询的句子，寻找排序高的相似问
-      returns: 最相关的句子排序对应的索引，索引对应corpus真实句子
-      """
-      score_overall = {}
-      for word in jieba.cut(sentence):
-          if word not in bm25model.document_score:
-              continue
-          for key, value in bm25model.document_score[word].items():
-              if key not in score_overall:
-                  # print(score_overall)
-                  score_overall[key] = value
-              else:
-                  score_overall[key] += value
-      if score_overall:
-          return sorted(score_overall.items(), key=lambda x: x[1], reverse=True)
-      else:
-          return None
+pip install fastbm25
 ```
+# fastbm25
+The fast bm25 algorithm for text match optimized by reverted index. So the complexity will be no more than O(N(log N)).
+
+（利用倒排索引加速的bm25文本匹配算法，从一堆数据中寻找最相似的文本）
+
+# usgae
+## find top k similar sentences from corpus
+```
+from fastbm25 import fastbm25
+
+corpus = [
+    "How are you !",
+    "Hello Jack! Nice to meet you!",
+    "I am from China, I like math."
+]
+tokenized_corpus = [doc.lower().split(" ") for doc in corpus]
+model = fastbm25(corpus)
+result = model.top_k_sentence("where are you from",k=1)
+print(result)
+```
+The result is 
+> [('I am from China, I like math.', 2, -0.06000000000000001)]
+
