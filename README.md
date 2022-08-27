@@ -9,7 +9,7 @@ The fast bm25 algorithm for text match optimized by reverted index. So the compl
 
 （利用倒排索引加速的bm25文本匹配算法，从一堆数据中寻找最相似的文本）
 
-# usgae
+# usage
 ## find top k similar sentences from corpus; Note you should tokenize text and use stop words in advance
 ```
 from fastbm25 import fastbm25
