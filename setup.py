@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="fastbm25",
-    version="0.0.1",
+    version="0.0.2",
     author="zhusleep",
     author_email="zhuflower@qq.com",
     description="Fast text match algorithm implementation for bm25",
