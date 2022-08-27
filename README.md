@@ -27,6 +27,7 @@ print(result)
 ```
 The result is list of tuple like
 > [('I am from China, I like math.', 2, -0.06000000000000001)]
+
 For some language like Chinese that doesn't need tokenization. you can use this example
 ```
 from fastbm25 import fastbm25
